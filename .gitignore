@@ -84,5 +84,3 @@ hs_err_pid*
 .sass-cache
 src/main/resources/static/css
 .gems
-
-src/main/resources/application-test.yml
