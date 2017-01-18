@@ -2,6 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/criteria-query/criteria-query.iml" filepath="$PROJECT_DIR$/.idea/modules/criteria-query/criteria-query.iml" group="criteria-query" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/criteria-query/criteria-query_main.iml" filepath="$PROJECT_DIR$/.idea/modules/criteria-query/criteria-query_main.iml" group="criteria-query" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/criteria-query/criteria-query_test.iml" filepath="$PROJECT_DIR$/.idea/modules/criteria-query/criteria-query_test.iml" group="criteria-query" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/querydsl/querydsl.iml" filepath="$PROJECT_DIR$/.idea/modules/querydsl/querydsl.iml" group="querydsl" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/querydsl/querydsl_main.iml" filepath="$PROJECT_DIR$/.idea/modules/querydsl/querydsl_main.iml" group="querydsl" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/querydsl/querydsl_test.iml" filepath="$PROJECT_DIR$/.idea/modules/querydsl/querydsl_test.iml" group="querydsl" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/springboot-jpa-query.iml" filepath="$PROJECT_DIR$/.idea/modules/springboot-jpa-query.iml" />
     </modules>
   </component>
