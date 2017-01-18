@@ -8,6 +8,9 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/querydsl/querydsl.iml" filepath="$PROJECT_DIR$/.idea/modules/querydsl/querydsl.iml" group="querydsl" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/querydsl/querydsl_main.iml" filepath="$PROJECT_DIR$/.idea/modules/querydsl/querydsl_main.iml" group="querydsl" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/querydsl/querydsl_test.iml" filepath="$PROJECT_DIR$/.idea/modules/querydsl/querydsl_test.iml" group="querydsl" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/specifications-query/specifications-query.iml" filepath="$PROJECT_DIR$/.idea/modules/specifications-query/specifications-query.iml" group="specifications-query" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/specifications-query/specifications-query_main.iml" filepath="$PROJECT_DIR$/.idea/modules/specifications-query/specifications-query_main.iml" group="specifications-query" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/specifications-query/specifications-query_test.iml" filepath="$PROJECT_DIR$/.idea/modules/specifications-query/specifications-query_test.iml" group="specifications-query" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/springboot-jpa-query.iml" filepath="$PROJECT_DIR$/.idea/modules/springboot-jpa-query.iml" />
     </modules>
   </component>

@@ -1,4 +1,5 @@
 rootProject.name = 'springboot-jpa-query'
 include 'querydsl'
 include 'criteria-query'
+include 'specifications-query'
 

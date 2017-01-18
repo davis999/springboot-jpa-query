@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/criteria-query" />
             <option value="$PROJECT_DIR$/querydsl" />
+            <option value="$PROJECT_DIR$/specifications-query" />
           </set>
         </option>
         <option name="useAutoImport" value="true" />
