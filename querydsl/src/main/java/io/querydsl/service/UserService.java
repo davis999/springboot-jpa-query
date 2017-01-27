@@ -2,13 +2,16 @@ package io.querydsl.service;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.PathBuilder;
+
 import io.querydsl.entity.Address;
 import io.querydsl.entity.LocalizedStringEntity;
 import io.querydsl.entity.User;
 import io.querydsl.repository.UserRepository;
 import io.querydsl.utils.PredicateUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,6 +57,10 @@ public class UserService {
     long end = System.currentTimeMillis();
 
     System.out.println("build expression time : " + (end - start));
+
+    OrderSpecifier orderSpecifier = null;
+
+    expression.and(null);
 
     Iterable<User> result = userRepository.findAll(expression);
     return Lists.newArrayList(result);
