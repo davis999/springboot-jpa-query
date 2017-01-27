@@ -80,13 +80,24 @@ public class PredicateUtil {
       } else {
         PathBuilder subPath = pathBuilder.get(key);
         QueryCriterias subQueryCriterias = queryCriterias.getSubQueryCriterias();
-        result = toPredicate(subPath, subQueryCriterias, clazz);
+        Class subClass = getField(clazz, key).getType();
+        result = toPredicate(subPath, subQueryCriterias, subClass);
       }
     } else {
       QueryCriteria queryCriteria = QueryCriteria.ofQueryCriterias(queryCriterias);
-      result = toParamsPredicate(pathBuilder, queryCriteria);
+      result = toParamsPredicate(pathBuilder, queryCriteria, clazz);
     }
 
+    return result;
+  }
+
+  private static Field getField(Class clazz, String key) {
+    Field result = null;
+    try {
+      result = clazz.getDeclaredField(key);
+    } catch (NoSuchFieldException e) {
+      //log and throw exception
+    }
     return result;
   }
 
@@ -113,9 +124,13 @@ public class PredicateUtil {
   }
 
   private static BooleanExpression toParamsPredicate(PathBuilder pathBuilder,
-                                                     QueryCriteria criteria) {
+                                                     QueryCriteria criteria,
+                                                     Class clazz) {
     BooleanExpression result = null;
-    if (isNumeric(criteria.getValue().toString())) {
+
+    Field keyField = getField(clazz, criteria.getKey());
+
+    if (isNumeric(keyField.getType())) {
       NumberPath<Integer> path = pathBuilder.getNumber(criteria.getKey(), Integer.class);
       int value = Integer.parseInt(criteria.getValue().toString());
       if (criteria.getOperation().equalsIgnoreCase("=")) {
@@ -127,7 +142,7 @@ public class PredicateUtil {
       }
     } else {
       StringPath path = pathBuilder.getString(criteria.getKey());
-      if (criteria.getOperation().equalsIgnoreCase(":")) {
+      if (criteria.getOperation().equalsIgnoreCase("=")) {
         result = path.containsIgnoreCase(criteria.getValue().toString());
       }
     }
