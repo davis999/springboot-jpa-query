@@ -1,18 +1,11 @@
 package io.querydsl.entity;
 
+import io.querydsl.utils.LocalizedStringQuery;
 import lombok.Data;
 
+import javax.persistence.*;
 import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import java.util.Set;
 
 /**
  * Created by Davis on 17/1/18.
@@ -25,11 +18,15 @@ public class User {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Integer id;
 
-  @Column
-  private String name;
+  @LocalizedStringQuery
+  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  private Set<LocalizedStringEntity> name;
 
   @Column
   private Integer age;
+
+  @OneToOne
+  private Address defaultAddress;
 
   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   private List<Address> addresses;

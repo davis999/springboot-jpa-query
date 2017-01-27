@@ -1,18 +1,20 @@
 package io.querydsl.service;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import com.querydsl.core.types.dsl.BooleanExpression;
-
+import com.querydsl.core.types.dsl.PathBuilder;
 import io.querydsl.entity.Address;
+import io.querydsl.entity.LocalizedStringEntity;
 import io.querydsl.entity.User;
 import io.querydsl.repository.UserRepository;
-import io.querydsl.util.SearchCriteria;
-import io.querydsl.util.UserPredicatesBuilder;
-
+import io.querydsl.utils.PredicateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Random;
+import java.util.Set;
 
 /**
  * Created by Davis on 17/1/18.
@@ -25,32 +27,35 @@ public class UserService {
   public User createUser() {
     User entity = new User();
 
-    entity.setName("davis");
-    entity.setAge(12);
+    Random random = new Random();
+    LocalizedStringEntity enName = new LocalizedStringEntity("en", "davis" + random.nextInt());
+    Set<LocalizedStringEntity> name = Sets.newHashSet(enName);
+
+    entity.setName(name);
+    entity.setAge(random.nextInt(128));
     Address address = new Address();
     address.setCity("GZ");
     address.setStreetName("SYL");
     address.setPostalCode("510000");
     List<Address> addresses = Lists.newArrayList(address);
     entity.setAddresses(addresses);
+    entity.setDefaultAddress(address);
 
     userRepository.save(entity);
     return entity;
   }
 
-  public List<User> searchUsers(List<SearchCriteria> params) {
-    BooleanExpression exp = buildPredicate(params);
-    return Lists.newArrayList(userRepository.findAll(exp));
-  }
+  public List<User> queryUserByCriterias(String queryConditions) {
 
-  private BooleanExpression buildPredicate(List<SearchCriteria> params) {
-    UserPredicatesBuilder builder = new UserPredicatesBuilder();
-    params.parallelStream().forEach(
-        p -> {
-          builder.with(p);
-        }
-    );
-    BooleanExpression exp = builder.build();
-    return exp;
+    PathBuilder<User> entityPath = new PathBuilder<User>(User.class, "user");
+
+    long start = System.currentTimeMillis();
+    BooleanExpression expression = PredicateUtil.toPredicate(entityPath, queryConditions, User.class);
+    long end = System.currentTimeMillis();
+
+    System.out.println("build expression time : " + (end - start));
+
+    Iterable<User> result = userRepository.findAll(expression);
+    return Lists.newArrayList(result);
   }
 }
