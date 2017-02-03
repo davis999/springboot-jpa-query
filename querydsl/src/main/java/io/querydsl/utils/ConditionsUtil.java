@@ -48,4 +48,14 @@ public class ConditionsUtil {
     }
     return result;
   }
+
+  public static int getConditionFlag(String queryConditions) {
+    int result = 0;
+    if (queryConditions.contains(" and ")) {
+      result = 1;
+    } else if (queryConditions.contains(" or ")) {
+      result = 2;
+    }
+    return result;
+  }
 }

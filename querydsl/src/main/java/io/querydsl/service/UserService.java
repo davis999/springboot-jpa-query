@@ -10,7 +10,7 @@ import io.querydsl.entity.Address;
 import io.querydsl.entity.LocalizedStringEntity;
 import io.querydsl.entity.User;
 import io.querydsl.repository.UserRepository;
-import io.querydsl.utils.PredicateUtil;
+import io.querydsl.utils.PredicateBuilder;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,7 +53,7 @@ public class UserService {
     PathBuilder<User> entityPath = new PathBuilder<User>(User.class, "user");
 
     long start = System.currentTimeMillis();
-    BooleanExpression expression = PredicateUtil.toPredicate(entityPath, queryConditions, User.class);
+    BooleanExpression expression = PredicateBuilder.toPredicate(entityPath, queryConditions, User.class);
     long end = System.currentTimeMillis();
 
     System.out.println("build expression time : " + (end - start));

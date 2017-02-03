@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 /**
  * Created by Davis on 17/1/18.
  */
@@ -13,25 +15,25 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class QueryCriteria {
-  private String key;
+  private List<String> key;
   private String operation;
-  private Object value;
+  private String value;
 
-  public static QueryCriteria ofQueryCriterias(QueryCriterias queryCriterias) {
+  public QueryCriteria getSubQueryCriteria() {
     QueryCriteria result = new QueryCriteria();
-
-    result.key = queryCriterias.getCurrentKey();
-    result.operation = queryCriterias.getOperation();
-    result.value = queryCriterias.getValue();
-
+    if (key.size() > 1) {
+      result.setKey(key.subList(1, key.size()));
+    }
+    result.setOperation(operation);
+    result.setValue(value);
     return result;
   }
 
-  public static QueryCriteria ofLocalizedStringCriteria(QueryCriterias queryCriterias) {
-    QueryCriteria result = new QueryCriteria();
-    result.key = queryCriterias.getKey().get(1);
-    result.operation = queryCriterias.getOperation();
-    result.value = queryCriterias.getValue();
-    return result;
+  public boolean isMultiQueryCriteria() {
+    return key.size() > 1;
+  }
+
+  public String getCurrentKey() {
+    return key.get(0);
   }
 }
