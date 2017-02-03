@@ -28,7 +28,7 @@ public class UserController {
 
   @GetMapping("/users")
   public List<User> findAll(@RequestParam(value = "search", required = false)
-                            @ApiParam(value = "query conditions", required = true)
+                            @ApiParam(value = "query conditions")
                                 String query) {
     return userService.queryUserByCriterias(query);
   }

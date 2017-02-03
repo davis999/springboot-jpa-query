@@ -1,5 +1,9 @@
 package io.querydsl.utils;
 
+import static io.querydsl.utils.ConditionFlag.ANDCONDITIONS;
+import static io.querydsl.utils.ConditionFlag.ORCONDITIONS;
+import static io.querydsl.utils.ConditionFlag.SINGLECONDITIONS;
+
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
@@ -49,12 +53,12 @@ public class ConditionsUtil {
     return result;
   }
 
-  public static int getConditionFlag(String queryConditions) {
-    int result = 0;
+  public static ConditionFlag getConditionFlag(String queryConditions) {
+    ConditionFlag result = SINGLECONDITIONS;
     if (queryConditions.contains(" and ")) {
-      result = 1;
+      result = ANDCONDITIONS;
     } else if (queryConditions.contains(" or ")) {
-      result = 2;
+      result = ORCONDITIONS;
     }
     return result;
   }

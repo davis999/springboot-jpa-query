@@ -13,6 +13,7 @@ import io.querydsl.repository.UserRepository;
 import io.querydsl.utils.PredicateBuilder;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -58,11 +59,9 @@ public class UserService {
 
     System.out.println("build expression time : " + (end - start));
 
-    OrderSpecifier orderSpecifier = null;
+    Pageable pageable = null;
 
-    expression.and(null);
-
-    Iterable<User> result = userRepository.findAll(expression);
+    Iterable<User> result = userRepository.findAll(expression, pageable);
     return Lists.newArrayList(result);
   }
 }

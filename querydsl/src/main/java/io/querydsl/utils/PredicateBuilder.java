@@ -5,6 +5,8 @@ import com.querydsl.core.types.dsl.PathBuilder;
 
 import io.querydsl.entity.LocalizedStringEntity;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,18 +20,20 @@ public class PredicateBuilder {
                                               Class clazz) {
     BooleanExpression result = null;
 
-    String[] whereConditions = queryConditions.split(" and | or ");
+    if (StringUtils.isNotBlank(queryConditions)) {
 
-    List<QueryCriteria> queryCriteria = CriteriaBuilder.build(whereConditions);
+      String[] whereConditions = queryConditions.split(" and | or ");
 
-    List<BooleanExpression> expressions = queryCriteria.stream().map(
-        q -> {
-          return toPredicate(pathBuilder, q, clazz);
-        }
-    ).collect(Collectors.toList());
+      List<QueryCriteria> queryCriteria = CriteriaBuilder.build(whereConditions);
 
-    result = combineExpressions(queryConditions, expressions);
+      List<BooleanExpression> expressions = queryCriteria.stream().map(
+          q -> {
+            return toPredicate(pathBuilder, q, clazz);
+          }
+      ).collect(Collectors.toList());
 
+      result = combineExpressions(queryConditions, expressions);
+    }
     return result;
   }
 
@@ -55,16 +59,16 @@ public class PredicateBuilder {
                                                       List<BooleanExpression> expressions) {
     BooleanExpression result = null;
     switch (ConditionsUtil.getConditionFlag(queryConditions)) {
-      case 0:
+      case SINGLECONDITIONS:
         result = expressions.get(0);
         break;
-      case 1:
+      case ANDCONDITIONS:
         result = expressions.get(0);
         for (int i = 1; i < expressions.size(); i++) {
           result = result.and(expressions.get(i));
         }
         break;
-      case 2:
+      case ORCONDITIONS:
         result = expressions.get(0);
         for (int i = 1; i < expressions.size(); i++) {
           result = result.or(expressions.get(i));
