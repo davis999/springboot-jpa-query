@@ -20,7 +20,7 @@ class UserQueryServiceTest extends Specification {
         String queryConditions = "name(en=davis746317784) and defaultAddress(city=GZ)"
 
         when:
-        def result = userService.queryUserByCriterias(queryConditions)
+        def result = userService.queryUserByCriteria(queryConditions)
 
         then:
         result != null

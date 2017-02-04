@@ -30,6 +30,6 @@ public class UserController {
   public List<User> findAll(@RequestParam(value = "search", required = false)
                             @ApiParam(value = "query conditions")
                                 String query) {
-    return userService.queryUserByCriterias(query);
+    return userService.queryUserByCriteria(query);
   }
 }

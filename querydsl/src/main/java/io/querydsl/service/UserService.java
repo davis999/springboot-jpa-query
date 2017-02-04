@@ -2,7 +2,6 @@ package io.querydsl.service;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.PathBuilder;
 
@@ -11,9 +10,13 @@ import io.querydsl.entity.LocalizedStringEntity;
 import io.querydsl.entity.User;
 import io.querydsl.repository.UserRepository;
 import io.querydsl.utils.PredicateBuilder;
+import io.querydsl.utils.SortBuilder;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,7 +36,8 @@ public class UserService {
 
     Random random = new Random();
     LocalizedStringEntity enName = new LocalizedStringEntity("en", "davis" + random.nextInt());
-    Set<LocalizedStringEntity> name = Sets.newHashSet(enName);
+    LocalizedStringEntity zhName = new LocalizedStringEntity("zh", "戴维斯");
+    Set<LocalizedStringEntity> name = Sets.newHashSet(enName, zhName);
 
     entity.setName(name);
     entity.setAge(random.nextInt(128));
@@ -49,17 +53,20 @@ public class UserService {
     return entity;
   }
 
-  public List<User> queryUserByCriterias(String queryConditions) {
+  public List<User> queryUserByCriteria(String queryConditions) {
 
     PathBuilder<User> entityPath = new PathBuilder<User>(User.class, "user");
 
     long start = System.currentTimeMillis();
-    BooleanExpression expression = PredicateBuilder.toPredicate(entityPath, queryConditions, User.class);
+    BooleanExpression expression = PredicateBuilder.toPredicate(entityPath, queryConditions, User
+        .class);
     long end = System.currentTimeMillis();
 
     System.out.println("build expression time : " + (end - start));
 
-    Pageable pageable = null;
+    Sort sort = SortBuilder.buildSortCriteria("");
+
+    PageRequest pageable = new PageRequest(0, 200, sort);
 
     Iterable<User> result = userRepository.findAll(expression, pageable);
     return Lists.newArrayList(result);
